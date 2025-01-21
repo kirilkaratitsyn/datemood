@@ -207,11 +207,10 @@ function App() {
           </div>
         )}
       </div>
-      <footer className="text-center mt-12">
-        <p className="text-lg text-gray-500">Made by <a className=" underline" target="_blank" href="https://karatitsyn.com/">Kiril</a></p>
-        <div className="social-links">
-          
-        </div>
+      <footer className="text-center mt-12 flex flex-row justify-center items-center gap-2 ">
+        <p className="text-lg text-gray-500">Made by <a className=" underline" target="_blank" href="https://karatitsyn.com/">Kiril</a> </p>
+        <img className="w-10 h-10 rounded-full object-cover" src="src\IMG_3731.JPG" alt="" />
+        
       </footer>
     </div>
   );
