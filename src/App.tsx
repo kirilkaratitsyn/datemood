@@ -1,73 +1,17 @@
-import React, { useState } from 'react';
-import { Heart, Home, MapPin, Moon, Sun } from 'lucide-react';
+import React, { useState, Suspense, lazy } from 'react';
+import { Heart, Home, MapPin, Moon, Sun, LucideIcon } from 'lucide-react';
 import { useTheme } from './ThemeContext';
+import { dateIdeas } from './arrays/dateIdeas';
+import { moods } from './arrays/moods';
+import { locationMaps } from './arrays/locationMaps';
 
-interface DateIdea {
-  title: string;
-  description: string;
-  mood: string;
-  location: 'home' | 'outside';
-  imageUrl: string;
-}
 
-const moods = [
-  { emoji: '😊', name: 'CHEERFUL' },
-  { emoji: '🤔', name: 'REFLECTIVE' },
-  { emoji: '🥰', name: 'ROMANTIC' },
-  { emoji: '🤣', name: 'HUMOROUS' },
-  { emoji: '😎', name: 'CHILL' },
-  { emoji: '🤗', name: 'PLAYFUL' }
-];
-
-const dateIdeas: DateIdea[] = [
-  {
-    title: 'Cozy Movie Marathon',
-    description: 'Pick your favorite movies, prepare snacks, and spend quality time together.',
-    mood: 'CHILL',
-    location: 'home',
-    imageUrl: 'https://images.unsplash.com/photo-1585647347483-22b66260dfff?auto=format&fit=crop&q=80'
-  },
-  {
-    title: 'Cooking Adventure',
-    description: 'Choose a new recipe and create a delicious meal together.',
-    mood: 'CHEERFUL',
-    location: 'home',
-    imageUrl: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80'
-  },
-  {
-    title: 'Sunset Picnic',
-    description: 'Pack some treats and find a beautiful spot to watch the sunset.',
-    mood: 'ROMANTIC',
-    location: 'outside',
-    imageUrl: 'https://images.unsplash.com/photo-1596662100219-a19b9d0e3c78?auto=format&fit=crop&q=80'
-  },
-  {
-    title: 'Board Game Night',
-    description: 'Challenge each other with your favorite board games.',
-    mood: 'PLAYFUL',
-    location: 'home',
-    imageUrl: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&q=80'
-  },
-  {
-    title: 'Art Gallery Visit',
-    description: 'Explore local exhibitions and discuss art together.',
-    mood: 'REFLECTIVE',
-    location: 'outside',
-    imageUrl: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&q=80'
-  },
-  {
-    title: 'Comedy Show',
-    description: 'Share laughs at a local comedy club or watch stand-up specials.',
-    mood: 'HUMOROUS',
-    location: 'outside',
-    imageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80'
-  }
-];
 
 function App() {
   const { theme, toggleTheme } = useTheme();
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<'home' | 'outside' | ''>('');
+  const [visibleCount, setVisibleCount] = useState<number>(6);
 
   const filteredDates = dateIdeas.filter(date => 
     (!selectedMood || date.mood === selectedMood) &&
@@ -75,6 +19,10 @@ function App() {
   );
 
   const isDark = theme === 'dark';
+
+  const loadMore = () => {
+    setVisibleCount(prevCount => prevCount + 6);
+  };
 
   return (
     <div className={`min-h-screen p-6 transition-colors duration-200 ${
@@ -103,12 +51,10 @@ function App() {
 
         {/* Main Content */}
         <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-6 leading-tight">
+          <h2 className="text-xl md:text-5xl font-bold mb-6 leading-tight">
             Discover perfect date ideas<br />based on your mood
           </h2>
-          <p className={`text-2xl mb-12 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}>How are you feeling today?</p>
+         
         </div>
 
         {/* Filters */}
@@ -117,25 +63,28 @@ function App() {
           <div className={`p-6 rounded-xl transition-colors duration-200 ${
             isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'
           }`}>
-            <h3 className="text-xl font-semibold mb-4">Select Your Mood</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <h3 className="text-xl font-semibold mb-1">Select Your Mood</h3>
+            <p className={`text-lg mb-3 ${
+            isDark ? 'text-gray-400' : 'text-gray-600'
+          }`}>How are you feeling today?</p>
+            <div className="flex flex-wrap gap-2">
               {moods.map((mood) => (
                 <button
                   key={mood.name}
                   onClick={() => setSelectedMood(mood.name === selectedMood ? '' : mood.name)}
                   className={`
                     flex items-center gap-2 p-3 rounded-xl border
-                    transition-all duration-200
+                    transition-all duration-200 w-full sm:w-auto
                     ${selectedMood === mood.name 
-                      ? 'bg-purple-500/10 border-purple-500 text-purple-500' 
+                      ? 'bg-gradient-to-r from-purple-400 to-purple-600 text-white' 
                       : `border-purple-500/20 hover:border-purple-500/50 ${
                           isDark ? 'text-white' : 'text-gray-900'
-                        }`
+                        } hover:scale-105`
                     }
                   `}
                 >
-                  <span className="text-xl">{mood.emoji}</span>
-                  <span className="font-medium">{mood.name}</span>
+                  <span className="text-xl md:text-2xl">{mood.emoji}</span>
+                  <span className="font-medium text-sm md:text-lg">{mood.name}</span>
                 </button>
               ))}
             </div>
@@ -147,57 +96,40 @@ function App() {
           }`}>
             <h3 className="text-xl font-semibold mb-4">Choose Location</h3>
             <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => setSelectedLocation(selectedLocation === 'home' ? '' : 'home')}
-                className={`
-                  flex items-center justify-center gap-2 p-3 rounded-xl border
-                  transition-all duration-200
-                  ${selectedLocation === 'home'
-                    ? 'bg-purple-500/10 border-purple-500 text-purple-500'
-                    : `border-purple-500/20 hover:border-purple-500/50 ${
+              {locationMaps.map(({ name, icon }) => (
+                <button
+                  key={name}
+                  onClick={() => setSelectedLocation(selectedLocation === name ? '' : name)}
+                  className={`
+                    flex items-center justify-center gap-2 p-3 rounded-xl border
+                    transition-all duration-200 hover:scale-105
+                    ${selectedLocation === name
+                      ? 'bg-gradient-to-r from-purple-400 to-purple-600 text-white'
+                      : `border-purple-500/20 hover:border-purple-500/50 ${
                         isDark ? 'text-white' : 'text-gray-900'
                       }`
-                  }
-                `}
-              >
-                <Home className="w-5 h-5" />
-                <span className="font-medium">HOME</span>
-              </button>
-              <button
-                onClick={() => setSelectedLocation(selectedLocation === 'outside' ? '' : 'outside')}
-                className={`
-                  flex items-center justify-center gap-2 p-3 rounded-xl border
-                  transition-all duration-200
-                  ${selectedLocation === 'outside'
-                    ? 'bg-purple-500/10 border-purple-500 text-purple-500'
-                    : `border-purple-500/20 hover:border-purple-500/50 ${
-                        isDark ? 'text-white' : 'text-gray-900'
-                      }`
-                  }
-                `}
-              >
-                <MapPin className="w-5 h-5" />
-                <span className="font-medium">OUTSIDE</span>
-              </button>
+                    }
+                  `}
+                >
+                  {React.createElement(icon, { className: 'w-5 h-5' })}
+                  <span className="font-medium  text-sm md:text-lg">{name.toUpperCase()}</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Date Ideas Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredDates.map((date, index) => (
+          {filteredDates.slice(0, visibleCount).map((date, index) => (
             <div
               key={index}
-              className={`rounded-xl overflow-hidden group hover:scale-[1.02] transition-all duration-200 ${
+              className={`card rounded-xl overflow-hidden group hover:scale-[1.02] ${
                 isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'
               }`}
             >
-              <div className="relative h-48">
-                <img
-                  src={date.imageUrl}
-                  alt={date.title}
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative h-auto">
+                
                 <div className={`absolute inset-0 bg-gradient-to-t ${
                   isDark 
                     ? 'from-[#1C1C23]' 
@@ -210,10 +142,10 @@ function App() {
                   isDark ? 'text-gray-400' : 'text-gray-600'
                 }`}>{date.description}</p>
                 <div className="flex gap-2">
-                  <span className="bg-purple-500/20 text-purple-500 text-sm px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-purple-400 to-purple-600 text-white text-sm px-3 py-1 rounded-full">
                     {date.mood}
                   </span>
-                  <span className="bg-purple-500/20 text-purple-500 text-sm px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-purple-400 to-purple-600 text-white text-sm px-3 py-1 rounded-full">
                     {date.location.toUpperCase()}
                   </span>
                 </div>
@@ -221,7 +153,25 @@ function App() {
             </div>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {visibleCount < filteredDates.length && (
+          <div className="text-center mt-6">
+            <button
+              onClick={loadMore}
+              className={`button px-6 py-3 rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50`}
+            >
+              Load More
+            </button>
+          </div>
+        )}
       </div>
+      <footer className="text-center mt-12">
+        <p className="text-lg text-gray-500">Made by <a className=" underline" target="_blank" href="https://karatitsyn.com/">Kiril</a></p>
+        <div className="social-links">
+          
+        </div>
+      </footer>
     </div>
   );
 }
