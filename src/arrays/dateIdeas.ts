@@ -4,6 +4,7 @@ export interface DateIdea {
   mood: string;
   location: 'home' | 'outside';
   imageUrl: string;
+  wishlisted: boolean;
 }
 
 export const dateIdeas: DateIdea[] = [
@@ -12,42 +13,48 @@ export const dateIdeas: DateIdea[] = [
       description: 'Pick your favorite movies, prepare snacks, and spend quality time together.',
       mood: 'CHILL',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1585647347483-22b66260dfff?auto=format&fit=crop&q=80'
+      imageUrl: 'https://images.unsplash.com/photo-1585647347483-22b66260dfff?auto=format&fit=crop&q=80',
+      wishlisted: false
     },
     {
       title: 'Cooking Adventure',
       description: 'Choose a new recipe and create a delicious meal together.',
       mood: 'CHEERFUL',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80'
+      imageUrl: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80',
+      wishlisted: false
     },
     {
       title: 'Sunset Picnic',
       description: 'Pack some treats and find a beautiful spot to watch the sunset.',
       mood: 'ROMANTIC',
       location: 'outside',
-      imageUrl: ''
+      imageUrl: '',
+      wishlisted: false
     },
     {
       title: 'Board Game Night',
       description: 'Challenge each other with your favorite board games.',
       mood: 'PLAYFUL',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&q=80'
+      imageUrl: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&q=80',
+      wishlisted: false
     },
     {
       title: 'Art Gallery Visit',
       description: 'Explore local exhibitions and discuss art together.',
       mood: 'REFLECTIVE',
       location: 'outside',
-      imageUrl: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&q=80'
+      imageUrl: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&q=80',
+      wishlisted: false
     },
     {
       title: 'Comedy Show',
       description: 'Share laughs at a local comedy club or watch stand-up specials.',
       mood: 'HUMOROUS',
       location: 'outside',
-      imageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80'
+      imageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80',
+      wishlisted: false
     },
 
     {
@@ -55,27 +62,31 @@ export const dateIdeas: DateIdea[] = [
       description: 'Find a quiet spot away from city lights and enjoy the stars.',
       mood: 'ROMANTIC',
       location: 'outside',
-      imageUrl: ''
+      imageUrl: '',
+      wishlisted: false
     },
     {
       title: 'Wine Tasting',
       description: 'Visit a local vineyard and enjoy tasting different wines.',
       mood: 'LOVING',
       location: 'outside',
-      imageUrl: ''
+      imageUrl: '',
+      wishlisted: false
     },
     {
       title: 'Spa Day at Home',
       description: 'Create a relaxing spa experience with massages and facials.',
       mood: 'RELAXED',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1589927986089-3581237890b0?auto=format&fit=crop&q=80'
+      imageUrl: 'https://images.unsplash.com/photo-1589927986089-3581237890b0?auto=format&fit=crop&q=80',
+      wishlisted: false
     },
     {
       title: 'Visit a Farmers Market',
       description: 'Explore local produce and enjoy fresh snacks together.',
       mood: 'CHEERFUL',
       location: 'outside',
-      imageUrl: ''
+      imageUrl: '',
+      wishlisted: false
     }
 ]; 

@@ -1,7 +1,7 @@
-import React, { useState, Suspense, lazy } from 'react';
-import { Heart, Home, MapPin, Moon, Sun, LucideIcon } from 'lucide-react';
+import React, { useState, Suspense, lazy, useEffect } from 'react';
+import { Heart, Home, MapPin, Moon, Sun, LucideIcon, Heart as FilledHeart } from 'lucide-react';
 import { useTheme } from './ThemeContext';
-import { dateIdeas } from './arrays/dateIdeas';
+import { DateIdea, dateIdeas } from './arrays/dateIdeas';
 import { moods } from './arrays/moods';
 import { locationMaps } from './arrays/locationMaps';
 
@@ -12,6 +12,16 @@ function App() {
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<'home' | 'outside' | ''>('');
   const [visibleCount, setVisibleCount] = useState<number>(6);
+  const [wishlist, setWishlist] = useState<DateIdea[]>(() => {
+    // Load wishlist from local storage
+    const savedWishlist = localStorage.getItem('wishlist');
+    return savedWishlist ? JSON.parse(savedWishlist) : [];
+  });
+
+  useEffect(() => {
+    // Save wishlist to local storage whenever it changes
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
 
   const filteredDates = dateIdeas.filter(date => 
     (!selectedMood || date.mood === selectedMood) &&
@@ -22,6 +32,14 @@ function App() {
 
   const loadMore = () => {
     setVisibleCount(prevCount => prevCount + 6);
+  };
+
+  const toggleWishlist = (dateIdea: DateIdea) => {
+    if (wishlist.includes(dateIdea)) {
+      setWishlist(wishlist.filter(item => item !== dateIdea));
+    } else {
+      setWishlist([...wishlist, dateIdea]);
+    }
   };
 
   return (
@@ -50,15 +68,15 @@ function App() {
         </div>
 
         {/* Main Content */}
-        <div className="text-center mb-12">
-          <h2 className="text-xl md:text-5xl font-bold mb-6 leading-tight">
-            Discover perfect date ideas<br />based on your mood
+        <div className="text-center mb-12 ">
+          <h2 className="text-xl md:text-5xl font-bold mb-6 md:leading-tight">
+            Discover perfect date ideas<br/>based on your mood
           </h2>
          
         </div>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12  border-b border-gray-200 pb-12">
           {/* Moods */}
           <div className={`p-6 rounded-xl transition-colors duration-200 ${
             isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'
@@ -91,7 +109,7 @@ function App() {
           </div>
 
           {/* Location */}
-          <div className={`p-6 rounded-xl transition-colors duration-200 ${
+          <div className={`p-6 rounded-xl transition-colors duration-200  ${
             isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'
           }`}>
             <h3 className="text-xl font-semibold mb-4">Choose Location</h3>
@@ -119,8 +137,28 @@ function App() {
           </div>
         </div>
 
+        {/* Wishlist Section */}
+        <div className="mb-12 flex flex-col  border-b border-gray-200 pb-12 ">
+          <h2 className="text-xl md:text-5xl font-bold mb-6 leading-tight">Your Wishlist</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {wishlist.map((date, index) => (
+              <div key={index} className={`card rounded-xl overflow-hidden group hover:scale-[1.02] ${isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'}`}>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{date.title}</h3>
+                  <p className={`mb-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{date.description}</p>
+                  <button onClick={() => toggleWishlist(date)} className="mt-4">
+                    <FilledHeart className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Date Ideas Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mb-12"> <h2 className="text-xl md:text-5xl font-bold mb-6 leading-tight">Date Ideas</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  border-b border-gray-200 pb-12">
+          
           {filteredDates.slice(0, visibleCount).map((date, index) => (
             <div
               key={index}
@@ -149,11 +187,14 @@ function App() {
                     {date.location.toUpperCase()}
                   </span>
                 </div>
+                <button onClick={() => toggleWishlist(date)} className="mt-4">
+                  <Heart className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
+                </button>
               </div>
             </div>
           ))}
         </div>
-
+        </div>
         {/* Load More Button */}
         {visibleCount < filteredDates.length && (
           <div className="text-center mt-6">
