@@ -37,8 +37,11 @@ function App() {
   const toggleWishlist = (dateIdea: DateIdea) => {
     if (wishlist.includes(dateIdea)) {
       setWishlist(wishlist.filter(item => item !== dateIdea));
+    
+      
     } else {
       setWishlist([...wishlist, dateIdea]);
+     
     }
   };
 
@@ -116,7 +119,7 @@ function App() {
           <div className={`p-6 rounded-xl transition-colors duration-200  ${
             isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'
           }`}>
-            <h3 className="text-xl font-semibold mb-4">Choose Location</h3>
+            <h3 className="text-xl font-semibold mb-1">Choose Location</h3>
             <p className={`text-lg mb-3 ${
             isDark ? 'text-gray-400' : 'text-gray-600'
           }`}>Where do you plan to be?</p>
@@ -150,11 +153,11 @@ function App() {
           {wishlist.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {wishlist.map((date, index) => (
-                <div key={index} className={` border-[1px] border-red-300 rounded-xl overflow-hidden group hover:scale-[1.02] ${isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'}`}>
+                <div key={index} className={` border-[1px] transition duration-200 border-red-300 rounded-xl overflow-hidden group hover:scale-[1.02] ${isDark ? 'bg-[#25252D]' : 'bg-white shadow-sm'}`}>
                   <div className="p-4">
                     <h3 className="text-xl font-semibold mb-2">{date.title}</h3>
                     <p className={`mb-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{date.description}</p>
-                    <button onClick={() => toggleWishlist(date)} className="mt-4">
+                    <button onClick={() => toggleWishlist(date)} className=" mt-4 hover:scale-110 transition duration-200">
                       <FilledHeart fill="currentColor" className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
                     </button>
                   </div>
@@ -199,7 +202,7 @@ function App() {
                   </span>
                 </div>
                 <div className="flex gap-3 mt-4 justify-start">
-                  <button onClick={() => toggleWishlist(date)} className="mt-4">
+                  <button onClick={() => toggleWishlist(date)} className="mt-4 hover:scale-110 transition duration-200 hover:text-gray-700">
                     <Heart className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
                   </button>
                   <button 
@@ -213,7 +216,7 @@ function App() {
                         alert('Sharing is not supported in this browser.');
                       }
                     }} 
-                    className="text-gray-400 mt-4 transition duration-200 flex items-center gap-2"
+                    className="text-gray-400 hover:text-gray-700 mt-4 transition duration-200 flex items-center gap-2 hover:scale-110"
                   >
                    <ShareIcon className="w-5 h-5" />Share 
                   </button>
