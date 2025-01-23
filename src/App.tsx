@@ -1,5 +1,5 @@
 import React, { useState, Suspense, lazy, useEffect } from 'react';
-import { Heart, Home, MapPin, Moon, Sun, LucideIcon, Heart as FilledHeart } from 'lucide-react';
+import { Heart, Home, MapPin, Moon, Sun, LucideIcon, Heart as FilledHeart, ShareIcon } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 import { DateIdea, dateIdeas } from './arrays/dateIdeas';
 import { moods } from './arrays/moods';
@@ -198,9 +198,26 @@ function App() {
                     {date.location.toUpperCase()}
                   </span>
                 </div>
-                <button onClick={() => toggleWishlist(date)} className="mt-4">
-                  <Heart className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
-                </button>
+                <div className="flex gap-3 mt-4 justify-start">
+                  <button onClick={() => toggleWishlist(date)} className="mt-4">
+                    <Heart className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
+                  </button>
+                  <button 
+                    onClick={() => {
+                      if (navigator.share) {
+                        navigator.share({
+                          title: `Hi there, Check out this date idea`,
+                          text: `Title: ${date.title}\nDescription: ${date.description}\n  \n  \n  I found it on ${window.location.href}`
+                        }).catch((error) => console.error('Error sharing:', error));
+                      } else {
+                        alert('Sharing is not supported in this browser.');
+                      }
+                    }} 
+                    className="text-gray-400 mt-4 transition duration-200 flex items-center gap-2"
+                  >
+                   <ShareIcon className="w-5 h-5" />Share 
+                  </button>
+                </div>
               </div>
             </div>
           ))}
