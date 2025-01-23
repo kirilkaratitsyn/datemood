@@ -1,5 +1,5 @@
 import React, { useState, Suspense, lazy, useEffect } from 'react';
-import { Heart, Home, MapPin, Moon, Sun, LucideIcon, Heart as FilledHeart, ShareIcon } from 'lucide-react';
+import { Heart, Home, MapPin, Moon, Sun, LucideIcon, Heart as FilledHeart, ShareIcon, ArrowUp } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 import { DateIdea, dateIdeas } from './arrays/dateIdeas';
 import { moods } from './arrays/moods';
@@ -43,6 +43,10 @@ function App() {
       setWishlist([...wishlist, dateIdea]);
      
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -157,9 +161,26 @@ function App() {
                   <div className="p-4">
                     <h3 className="text-xl font-semibold mb-2">{date.title}</h3>
                     <p className={`mb-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{date.description}</p>
+                    <div className="flex gap-3">
                     <button onClick={() => toggleWishlist(date)} className=" mt-4 hover:scale-110 transition duration-200">
                       <FilledHeart fill="currentColor" className={`w-5 h-5 ${wishlist.includes(date) ? 'text-red-500' : 'text-gray-400'}`} />
                     </button>
+                    <button 
+                    onClick={() => {
+                      if (navigator.share) {
+                        navigator.share({
+                          title: `Hi there, Check out this date idea`,
+                          text: `Title: ${date.title}\nDescription: ${date.description}\n  \n  \n  I found it on ${window.location.href}`
+                        }).catch((error) => console.error('Error sharing:', error));
+                      } else {
+                        alert('Sharing is not supported in this browser.');
+                      }
+                    }} 
+                    className="text-gray-400 hover:text-gray-700 mt-4 transition duration-200 flex items-center gap-2 hover:scale-110"
+                  >
+                   <ShareIcon className="w-5 h-5" />Share 
+                  </button>
+                  </div>
                   </div>
                 </div>
               ))}
@@ -171,6 +192,11 @@ function App() {
 
         {/* Date Ideas Grid */}
         <div className="mb-12"> <h2 className="text-xl md:text-5xl font-bold mb-6 leading-tight">Date Ideas</h2>
+        <div className="flex justify-between items-center mb-6">
+          <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            {filteredDates.length} ideas found
+          </p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  border-b border-gray-200 pb-12">
           
           {filteredDates.slice(0, visibleCount).map((date, index) => (
@@ -194,10 +220,10 @@ function App() {
                   isDark ? 'text-gray-400' : 'text-gray-600'
                 }`}>{date.description}</p>
                 <div className="flex gap-2">
-                  <span className="bg-gradient-to-r from-red-400 to-red-600 text-white text-sm px-3 py-1 rounded-full">
+                  <span className="bg-red-500 text-white text-sm px-3 py-1 rounded-full">
                     {moods.find(mood => mood.name === date.mood)?.emoji} {date.mood}
                   </span>
-                  <span className="bg-gradient-to-r from-red-400 to-red-600 text-white text-sm px-3 py-1 rounded-full">
+                  <span className="bg-red-500 text-white text-sm px-3 py-1 rounded-full">
                     {date.location.toUpperCase()}
                   </span>
                 </div>
@@ -237,6 +263,15 @@ function App() {
             </button>
           </div>
         )}
+
+        {/* Back to Top Button */}
+        <button 
+          onClick={scrollToTop} 
+          className={`fixed bottom-4 right-4 p-3 rounded-full bg-red-600 text-white shadow-lg transition-opacity duration-200 hover:opacity-80 ${isDark ? 'bg-red-700' : 'bg-red-600'}`}
+          aria-label="Back to Top"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
       </div>
       <footer className="text-center mt-12 flex flex-row justify-center items-center gap-2 ">
         <p className="text-lg text-gray-500">Made by <a className=" underline" target="_blank" href="https://karatitsyn.com/">Kiril</a> </p>
