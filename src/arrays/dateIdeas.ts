@@ -13,7 +13,7 @@ export const dateIdeas: DateIdea[] = [
       description: 'Pick your favorite movies, prepare snacks, and spend quality time together.',
       mood: 'CHILL',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1585647347483-22b66260dfff?auto=format&fit=crop&q=80',
+      imageUrl: '',
       wishlisted: false
     },
     {
@@ -21,7 +21,7 @@ export const dateIdeas: DateIdea[] = [
       description: 'Choose a new recipe and create a delicious meal together.',
       mood: 'CHEERFUL',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80',
+      imageUrl: '',
       wishlisted: false
     },
     {
@@ -37,7 +37,7 @@ export const dateIdeas: DateIdea[] = [
       description: 'Challenge each other with your favorite board games.',
       mood: 'PLAYFUL',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&q=80',
+      imageUrl: '',
       wishlisted: false
     },
     {
@@ -45,7 +45,7 @@ export const dateIdeas: DateIdea[] = [
       description: 'Explore local exhibitions and discuss art together.',
       mood: 'REFLECTIVE',
       location: 'outside',
-      imageUrl: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&q=80',
+      imageUrl: '',
       wishlisted: false
     },
     {
@@ -53,7 +53,7 @@ export const dateIdeas: DateIdea[] = [
       description: 'Share laughs at a local comedy club or watch stand-up specials.',
       mood: 'HUMOROUS',
       location: 'outside',
-      imageUrl: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&q=80',
+      imageUrl: '',
       wishlisted: false
     },
 
@@ -78,7 +78,7 @@ export const dateIdeas: DateIdea[] = [
       description: 'Create a relaxing spa experience with massages and facials.',
       mood: 'RELAXED',
       location: 'home',
-      imageUrl: 'https://images.unsplash.com/photo-1589927986089-3581237890b0?auto=format&fit=crop&q=80',
+      imageUrl: '',
       wishlisted: false
     },
     {
@@ -88,5 +88,85 @@ export const dateIdeas: DateIdea[] = [
       location: 'outside',
       imageUrl: '',
       wishlisted: false
-    }
+    },
+      {
+        title: 'Morning Coffee Walk',
+        description: 'Grab your favorite coffee and stroll through a peaceful park.',
+        mood: 'CHILL',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Museum Scavenger Hunt',
+        description: 'Turn a museum visit into a fun game of finding hidden gems.',
+        mood: 'PLAYFUL',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Campfire and S’mores',
+        description: 'Enjoy a cozy evening with marshmallows and good conversation.',
+        mood: 'ROMANTIC',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Pottery Class',
+        description: 'Get messy and creative by making your own pottery.',
+        mood: 'CREATIVE',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Hot Air Balloon Ride',
+        description: 'Soar through the sky and enjoy breathtaking views.',
+        mood: 'EXCITED',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Bookstore Date',
+        description: 'Browse through books and discover new stories together.',
+        mood: 'REFLECTIVE',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'At-Home Movie Premiere',
+        description: 'Create a home theater experience with popcorn and blankets.',
+        mood: 'RELAXED',
+        location: 'home',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Cooking Competition',
+        description: 'Challenge each other to create a dish from random ingredients.',
+        mood: 'HUMOROUS',
+        location: 'home',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Sunrise Yoga',
+        description: 'Start the day with a calming yoga session as the sun rises.',
+        mood: 'SLEEPY',
+        location: 'outside',
+        imageUrl: '',
+        wishlisted: false
+      },
+      {
+        title: 'Personalized Wine and Paint',
+        description: 'Sip wine and paint a masterpiece in your own style.',
+        mood: 'LOVING',
+        location: 'home',
+        imageUrl: '',
+        wishlisted: false
+      }
 ]; 

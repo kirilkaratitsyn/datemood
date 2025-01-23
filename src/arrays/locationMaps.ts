@@ -1,12 +1,10 @@
-import { Home, MapPin, LucideIcon } from 'lucide-react';
-
-export const locationMaps: { name: 'home' | 'outside'; icon: LucideIcon }[] = [
+export const locationMaps: { name: 'home' | 'outside'; emoji: string }[] = [
   {
     name: 'home',
-    icon: Home
+    emoji: '🏠'
   },
   {
     name: 'outside',
-    icon: MapPin
+    emoji: '📍'
   }
 ]; 
